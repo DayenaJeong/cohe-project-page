@@ -22,7 +22,7 @@
     "results/aggregate/dinov2_scalar/cifar100_dinov2_predictive_r2.csv": "94a7efe31df5e14ab2e888cfc8dc58af7abf5cf126c9ca9ac102d4ce3cb861f8",
     "results/aggregate/positive_control/positive_task_aligned_control_summary.json": "050eae557601731b3e6d0112a4f1a1fb682145309f217804555b831bb9c096a6"
   },
-  "paperHash": "d0d148f8b97e682d12d473c6ff11f7de4bcc0029ec0530c7f113bb9f63c9ed07",
+  "paperHash": "9b42df497c5342e1ddc14f749c92b6a6cb257e546580ddd77d240eea56836e34",
   "dino": [
     {
       "label": "10% subset",

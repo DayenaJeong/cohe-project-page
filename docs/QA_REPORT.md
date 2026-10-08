@@ -1,5 +1,15 @@
 # Website validation
 
+## Final revision, local validation
+
+This camera-ready revision changes the question-led hero, separates DINOv2 first-learning prediction from selection accuracy, clarifies endpoint-specific Gate 3, adds a verified three-step Apply COHE section, consolidates scope, and adds a local PDF and 1200×630 social preview. It preserves the existing academic design, numerical result records, author order, and artifact release.
+
+Final-revision logs and browser evidence are retained in `../NeurIPS/final_revision_20261008/`. The current revision is checked at 1440, 768, and 390 px with nine axe scans, gate keyboard controls, clipboard copying, local PDF/image resources, and a JavaScript-disabled visit. `npm run check` and `npm run build` are rerun after the final PDF copy. The project has no lint script. No deployment, commit, push, training, or scientific experiment rerun is part of this revision.
+
+The earlier performance measurement and four-width checks below describe the preceding website version and have not been rerun as Lighthouse results for this revision. The old statement that the Paper action only links the conference record is superseded: the revised local site also serves the matching author PDF. Publication still requires resolution of the author decisions in the final revision report.
+
+## Earlier website validation
+
 Validation date: 2026-10-08. Scientific records were read and verified without model training or modification of the COHE artifact.
 
 ## Build and scientific verification

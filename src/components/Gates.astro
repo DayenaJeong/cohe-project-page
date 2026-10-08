@@ -30,7 +30,7 @@ const gates = [
     name: 'Operational Transfer',
     question: 'Does using the proxy actually help?',
     evidence:
-      'Run the declared selection, ordering, or retrieval protocol against a relevant matched baseline. Report seed-paired metric differences and uncertainty.',
+      'Evaluate the declared downstream endpoint against a matched baseline. Retraining uses seed-paired accuracy differences; retrieval uses target-hard recall and a shuffled-ranking null.',
     support:
       'Supports actionability within the evaluated protocol when the declared evidence requirements are met.',
     boundary:
@@ -77,10 +77,10 @@ const gates = [
         <h3>{gate.question}</h3>
         <p>{gate.evidence}</p>
         <p class="claim">
-          <strong>What this supports.</strong> {gate.support}
+          {gate.support}
         </p>
         <p class="boundary">
-          <strong>Claim boundary.</strong> {gate.boundary}
+          {gate.boundary}
         </p>
       </div>
       <div class="gate-visual">
@@ -91,7 +91,6 @@ const gates = [
           ))}
         </ol>
         <div class="evidence-example">
-          <p class="detail-label">Evidence from the paper</p>
           {i === 2 ? (
             <EffectPlot
               rows={[results.dino[0]]}
@@ -109,15 +108,14 @@ const gates = [
               <span>DINOv2 isolation · first-learning</span>
             </p>
           )}
-          <p>{gate.example}</p>
+          {i === 2 && <p>{gate.example}</p>}
         </div>
       </div>
     </div>
   ))}
   <p class="gate-footnote">
-    The diagrams show the evaluation process; they are conceptual illustrations. The numerical
-    examples are measured paper results. Thresholds and claim tiers follow the full audit
-    specification, with no universal pass/fail score.
+    Gate 1 and 2 examples use first-learning; Gate 3 measures test accuracy after subset
+    retraining. Each result retains its target and protocol.
   </p>
 
   <figure class="paper-figure protocol-figure">
@@ -134,8 +132,7 @@ const gates = [
       />
     </a>
     <figcaption>
-      Original camera-ready Figure 1. Each gate licenses its own evidence level; the audit
-      retains the scope of the final claim.{' '}
+      Each gate licenses its own evidence level; the audit retains the scope of the final claim.{' '}
       <span class="figure-mobile-note">
         Scroll the figure to read its labels, or tap to open the full vector.
       </span>
@@ -149,11 +146,6 @@ const gates = [
     <p>
       Declare thresholds and safety margins using matched null behavior and variability. COHE
       uses setting-specific evidence requirements, not universal cutoffs.
-    </p>
-    <p>
-      First-learning and GradNorm relations remain target-specific. Gate 2 studies scalar or
-      low-dimensional proxy inputs; it does not test all information in the full
-      representations.
     </p>
   </div>
 </section>
