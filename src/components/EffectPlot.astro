@@ -1,12 +1,67 @@
 ---
 import { number } from '../data/results';
-interface Props { rows: {label:string;delta:number;ci:number[]}[]; min:number; max:number; ticks:number[]; digits?:number; label:string }
-const {rows,min,max,ticks,digits=2,label}=Astro.props;
-const x=(v:number)=>14+((v-min)/(max-min))*372;
+interface Props {
+  rows: { label: string; delta: number; ci: number[] }[];
+  min: number;
+  max: number;
+  ticks: number[];
+  digits?: number;
+  label: string;
+}
+const { rows, min, max, ticks, digits = 2, label } = Astro.props;
+const x = (v: number) => 14 + ((v - min) / (max - min)) * 372;
 ---
+
 <figure class="effect-plot" aria-label={label}>
-  <div class="plot-key"><span>Mean difference · 95% paired CI</span><span>Top-1, percentage points</span></div>
-  {rows.map(row=><div class="effect-row"><div class="effect-label"><span>{row.label}</span><strong>{number(row.delta,digits)}<small> pp</small></strong></div><svg viewBox="0 0 400 36" role="img" aria-label={`${row.label}: ${number(row.delta,digits)} percentage points, 95% confidence interval ${number(row.ci[0],digits)} to ${number(row.ci[1],digits)}.`}><line x1="14" y1="18" x2="386" y2="18" class="plot-track"/><line x1={x(0)} y1="0" x2={x(0)} y2="36" class="plot-zero"/><line x1={x(row.ci[0])} y1="18" x2={x(row.ci[1])} y2="18" class="plot-interval"/><line x1={x(row.ci[0])} y1="12" x2={x(row.ci[0])} y2="24" class="plot-cap"/><line x1={x(row.ci[1])} y1="12" x2={x(row.ci[1])} y2="24" class="plot-cap"/><circle cx={x(row.delta)} cy="18" r="5" class="plot-mean"/></svg><span class="interval-label">[{number(row.ci[0],digits)}, {number(row.ci[1],digits)}]</span></div>)}
-  <div class="axis-row"><div></div><svg viewBox="0 0 400 32" aria-hidden="true">{ticks.map(tick=><text x={x(tick)} y="20" text-anchor="middle">{tick===0?'0':number(tick,Number.isInteger(tick)?0:1)}</text>)}</svg><div></div></div>
-  <figcaption>Negative values favor the baseline. Whiskers are paired Student-t 95% confidence intervals.</figcaption>
+  <div class="plot-key">
+    <span>Mean difference · 95% paired CI</span>
+    <span>Top-1, percentage points</span>
+  </div>
+  {rows.map((row) => (
+    <div class="effect-row">
+      <div class="effect-label">
+        <span>{row.label}</span>
+        <strong>
+          {number(row.delta, digits)}
+          <small> pp</small>
+        </strong>
+      </div>
+      <svg
+        viewBox="0 0 400 36"
+        role="img"
+        aria-label={`${row.label}: ${number(row.delta, digits)} percentage points, 95% confidence interval ${number(row.ci[0], digits)} to ${number(row.ci[1], digits)}.`}
+      >
+        <line x1="14" y1="18" x2="386" y2="18" class="plot-track" />
+        <rect
+          x={Math.min(x(0), x(row.delta))}
+          y="11"
+          width={Math.abs(x(row.delta) - x(0))}
+          height="14"
+          class="plot-bar"
+        />
+        <line x1={x(0)} y1="0" x2={x(0)} y2="36" class="plot-zero" />
+        <line x1={x(row.ci[0])} y1="18" x2={x(row.ci[1])} y2="18" class="plot-interval" />
+        <line x1={x(row.ci[0])} y1="12" x2={x(row.ci[0])} y2="24" class="plot-cap" />
+        <line x1={x(row.ci[1])} y1="12" x2={x(row.ci[1])} y2="24" class="plot-cap" />
+        <circle cx={x(row.delta)} cy="18" r="3.5" class="plot-mean" />
+      </svg>
+      <span class="interval-label">
+        [{number(row.ci[0], digits)}, {number(row.ci[1], digits)}]
+      </span>
+    </div>
+  ))}
+  <div class="axis-row">
+    <div></div>
+    <svg viewBox="0 0 400 32" aria-hidden="true">
+      {ticks.map((tick) => (
+        <text x={x(tick)} y="20" text-anchor="middle">
+          {tick === 0 ? '0' : number(tick, Number.isInteger(tick) ? 0 : 1)}
+        </text>
+      ))}
+    </svg>
+    <div></div>
+  </div>
+  <figcaption>
+    Negative values favor the baseline. Whiskers are paired Student-t 95% confidence intervals.
+  </figcaption>
 </figure>
